@@ -1,0 +1,9 @@
+.idea
+
+build
+vendor
+
+composer.lock
+
+tests/.phpunit.*
+.phpunit.*
