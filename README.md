@@ -3,7 +3,7 @@
 Faster migrations for Laravel tests. 
 
 The package takes a snapshot of your mysql database and imports the file rather than running all of your migrations. 
-If you have a project with many migration files, this process can provide you with a massive speed improvement in 
+If you have a project with many migration files, this process can provide you with a massive speed improvement when 
 initializing your test suite. This can be used as a replacement for the RefreshDatabase trait that is provided out
 of the box with Laravel.
 
