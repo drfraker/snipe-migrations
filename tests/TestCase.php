@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: dustin
  * Date: 2019-02-19
- * Time: 15:44
+ * Time: 15:44.
  */
 
 namespace Drfraker\SnipeMigrations\Tests;
