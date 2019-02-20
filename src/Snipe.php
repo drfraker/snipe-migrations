@@ -9,7 +9,6 @@ class Snipe
 {
     /**
      * Make sure the testing database is up to date.
-     *
      */
     public function importSnapshot()
     {
@@ -20,7 +19,6 @@ class Snipe
         $this->migrationChanges()
             ? $this->newSnapshot()
             : $this->importDatabase();
-
     }
 
     /**
@@ -54,7 +52,7 @@ class Snipe
             return filemtime(database_path('migrations/'.$file));
         });
 
-        if(! $storedTimeSum || (int) $storedTimeSum !== $timeSum || ! file_exists($snipeDumpFile)) {
+        if (! $storedTimeSum || (int) $storedTimeSum !== $timeSum || ! file_exists($snipeDumpFile)) {
             // store the new time sum.
             file_put_contents($snipeFile, $timeSum);
 
@@ -69,7 +67,6 @@ class Snipe
      */
     protected function newSnapshot()
     {
-
         Artisan::call('migrate:fresh');
 
         $storageLocation = config('snipe.snapshot-location');
