@@ -11,8 +11,6 @@ class SnipeMigrationsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/snipe.php' => config_path('snipe.php'),
         ], 'config');
-
-        $this->publishes([__DIR__.'/SnipeTestCase.php' => base_path('/tests/SnipeTestCase.php')], 'stubs');
     }
 
     public function register()
