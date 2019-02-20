@@ -2,7 +2,6 @@
 
 namespace Drfraker\SnipeMigrations;
 
-
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
