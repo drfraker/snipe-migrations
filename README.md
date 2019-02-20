@@ -1,3 +1,5 @@
+![build status](https://travis-ci.com/drfraker/snipe-migrations.svg?branch=master "build status")
+
 # Snipe Migrations
 
 Faster migrations for Laravel tests. 
