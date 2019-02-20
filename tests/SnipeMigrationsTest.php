@@ -3,7 +3,6 @@
 namespace Drfraker\SnipeMigrations\Tests;
 
 use Drfraker\SnipeMigrations\Snipe;
-use Illuminate\Support\Facades\Config;
 
 class SnipeMigrationsTest extends TestCase
 {

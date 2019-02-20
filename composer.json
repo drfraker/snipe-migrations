@@ -1,6 +1,6 @@
 {
     "name": "drfraker/snipe-migrations",
-    "description": "Faster migrations for Laravel tests.",
+    "description": "Blazing fast database migrations for Laravel tests.",
     "type": "library",
     "license": "MIT",
     "authors": [

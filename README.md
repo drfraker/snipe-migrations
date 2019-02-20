@@ -3,7 +3,7 @@
 
 # Snipe Migrations
 
-Faster migrations for Laravel tests. 
+Blazing fast database migrations for Laravel tests. 
 
 The package takes a snapshot of your mysql database and imports the schema to your test database rather than running 
 all of your migrations when the test suite starts up. 
@@ -15,6 +15,14 @@ of the box with Laravel.
 As an example, we tested this on an application that takes about 4 seconds to run all migrations with RefreshDatabase. 
 Using SnipeMigrations the tests start up in 200 ms.
 
+## Requirements
+1. Laravel >= 5.2
+2. PHP >= 7.1
+3. MySql or MariaDb, with separate database for testing.
+	- For example if you have a development database for your application called `amazingapp`
+	you would create a test database called `amazingapp_test` and add the details of the 
+	database in your phpunit.xml file. `amazingapp_test` is the database that Snipe will keep in sync for you.
+
 ## Installation
 
 Require the package using composer.
@@ -25,7 +33,7 @@ composer require --dev drfraker/snipe-migrations
 
 ## Usage
 
-**After you've installed the package through composer**
+**After you've installed the package via composer**
 1. Add the following code to your `tests/TestCase` file. Don't forget to import the classes at the top of the file.
 
 2. By default, SnipeMigrations will store the `.snipe` file and the `snipe_snapshot.sql` file in the root of
