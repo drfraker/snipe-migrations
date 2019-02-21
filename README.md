@@ -49,9 +49,7 @@ is detected SnipeMigrations will create and use a snapshot of your database to k
 // Add this code block to tests/TestCase, just below the use CreatesApplication; statement.
 public function setUpTraits()
 {
-	parent::setUpTraits();
-
-	$uses = array_flip(class_uses_recursive(static::class));
+	$uses = parent::setUpTraits();
 
 	if (isset($uses[DatabaseTransactions::class])) {
 		(new Snipe())->importSnapshot();
@@ -76,9 +74,7 @@ abstract class TestCase extends BaseTestCase
     // Code you added in step 1.
     public function setUpTraits()
     {
-        parent::setUpTraits();
-
-        $uses = array_flip(class_uses_recursive(static::class));
+        $uses = parent::setUpTraits();
 
         if (isset($uses[DatabaseTransactions::class])) {
             (new Snipe())->importSnapshot();
