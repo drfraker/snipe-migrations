@@ -3,6 +3,7 @@
 namespace Drfraker\SnipeMigrations;
 
 use Exception;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 
 class Snipe
@@ -46,10 +47,8 @@ class Snipe
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
 
-        $timeSum = collect(scandir(database_path('migrations')))->reject(function ($file) {
-            return $file === '.' || $file === '..';
-        })->sum(function ($file) {
-            return filemtime(database_path('migrations/'.$file));
+        $timeSum = collect(File::allFiles(database_path('migrations')))->sum(function ($file) {
+            return $file->getMTime();
         });
 
         if (! $storedTimeSum || (int) $storedTimeSum !== $timeSum || ! file_exists($snipeDumpFile)) {
