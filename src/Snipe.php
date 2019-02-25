@@ -46,7 +46,8 @@ class Snipe
         $snipeDumpFile = config('snipe.snapshot-location');
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
-        $timeSum = collect(app()['migrator']->paths())->map(function ($path) {
+        $paths = collect(app()['migrator']->paths())->concat([database_path('migrations')]);
+        $timeSum = $paths->map(function ($path) {
             return collect(File::allFiles($path))->sum(function ($file) {
                 return $file->getMTime();
             });
@@ -80,7 +81,7 @@ class Snipe
      */
     protected function importDatabase()
     {
-        if (! SnipeDatabaseState::$imported) {
+        if (!SnipeDatabaseState::$imported) {
             $dumpfile = config('snipe.snapshot-location');
 
             exec("mysql -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");

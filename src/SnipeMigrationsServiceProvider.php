@@ -2,6 +2,7 @@
 
 namespace Drfraker\SnipeMigrations;
 
+use Drfraker\SnipeMigrations\SnipeClearCommand;
 use Illuminate\Support\ServiceProvider;
 
 class SnipeMigrationsServiceProvider extends ServiceProvider
