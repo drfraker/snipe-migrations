@@ -54,9 +54,9 @@ abstract class TestCase extends BaseTestCase
 
 2. By default, SnipeMigrations will store a `.snipe` file and the `snipe_snapshot.sql` file in `/vendor/drfraker/snipe-migrations/snapshots`. If you would like to change the location of the files follow the directions below to publish
 the snipe config file.
-	- To publish the snipee config file, run `php artisan vendor:publish` and select `snipe-config` from the list.
+	- To publish the snipe config file, run `php artisan vendor:publish` and select `snipe-config` from the list.
 
-3. If the snip_snapshot.sql file gets out of sync for any reason you can clear it by running `php artisan snipe:clear`. After running
+3. If the snipe_snapshot.sql file gets out of sync for any reason you can clear it by running `php artisan snipe:clear`. After running
 this command your original database migrations will run again creating a new `snipe_snapshot.sql` file.
 
 ## Contributing
