@@ -2,9 +2,8 @@
 
 namespace Drfraker\SnipeMigrations;
 
-use Drfraker\SnipeMigrations\Snipe;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 
 trait SnipeMigrations
@@ -20,4 +19,3 @@ trait SnipeMigrations
         parent::setUpTraits();
     }
 }
-
