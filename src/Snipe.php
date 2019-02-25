@@ -81,7 +81,7 @@ class Snipe
      */
     protected function importDatabase()
     {
-        if (!SnipeDatabaseState::$imported) {
+        if (! SnipeDatabaseState::$imported) {
             $dumpfile = config('snipe.snapshot-location');
 
             exec("mysql -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
