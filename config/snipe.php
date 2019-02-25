@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'snapshot-location' => base_path('tests/snipe_snapshot.sql'),
-    'snipefile-location' => base_path('tests/.snipe'),
+    'snapshot-location' => __DIR__ . '/../snapshots/snipe_snapshot.sql',
+    'snipefile-location' => __DIR__ . '/../snapshots/.snipe',
 ];
