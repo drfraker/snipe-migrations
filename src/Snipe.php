@@ -51,7 +51,7 @@ class Snipe
             return $file->getMTime();
         });
 
-        if (! $storedTimeSum || (int) $storedTimeSum !== $timeSum || ! file_exists($snipeDumpFile)) {
+        if (!$storedTimeSum || (int)$storedTimeSum !== $timeSum || !file_exists($snipeDumpFile)) {
             // store the new time sum.
             file_put_contents($snipeFile, $timeSum);
 
@@ -79,7 +79,7 @@ class Snipe
      */
     protected function importDatabase()
     {
-        if (! SnipeDatabaseState::$imported) {
+        if (!SnipeDatabaseState::$imported) {
             $dumpfile = config('snipe.snapshot-location');
 
             exec("mysql -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");

@@ -7,7 +7,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 
-trait SnipeMigrations {
+trait SnipeMigrations
+{
     public function setUpTraits()
     {
         $uses = array_flip(class_uses_recursive(static::class));
@@ -19,3 +20,4 @@ trait SnipeMigrations {
         parent::setUpTraits();
     }
 }
+
