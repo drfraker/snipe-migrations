@@ -53,7 +53,7 @@ class Snipe
             });
         })->sum();
 
-        if (!$storedTimeSum || (int)$storedTimeSum !== $timeSum || !file_exists($snipeDumpFile)) {
+        if (! $storedTimeSum || (int) $storedTimeSum !== $timeSum || ! file_exists($snipeDumpFile)) {
             // store the new time sum.
             file_put_contents($snipeFile, $timeSum);
 
