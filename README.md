@@ -34,55 +34,30 @@ composer require --dev drfraker/snipe-migrations
 ## Usage
 
 **After you've installed the package via composer**
-1. Add the following code to your `tests/TestCase` file. Don't forget to import the classes at the top of the file.
-
-2. By default, SnipeMigrations will store the `.snipe` file and the `snipe_snapshot.sql` file in the root of
-`tests/`. If you would like to change the location of the files follow the directions below to publish
-the snipe config file.
-	- To publish the snipe config file, run `php artisan vendor:publish` and select `snipe-config` from the list.
-	
-3. To utilize SnipeMigrations, all you need to do is `use DatabaseTransactions` in your tests. When `DatabaseTransactions`
-is detected SnipeMigrations will create and use a snapshot of your database to keep your test database in sync. 
-
-4. (optional) Add the files `tests/.snipe` and `tests/snipe_snapshot.sql` to your .gitignore.
-```php
-// Add this code block to tests/TestCase, just below the use CreatesApplication; statement.
-public function setUpTraits()
-{
-	$uses = parent::setUpTraits();
-
-	if (isset($uses[DatabaseTransactions::class])) {
-		(new Snipe())->importSnapshot();
-	}
-}
-```
+1. Add the `SnipeMigrations` trait to your `tests/TestCase` file. Don't forget to import the class at the top of the file.
 
 When you're done, you're `tests/TestCase.php` file should look like this.
+
 ```php
 <?php
 
 namespace Tests;
 
-use Drfraker\SnipeMigrations\Snipe;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Drfraker\SnipeMigrations\SnipeMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
-	
-    // Code you added in step 1.
-    public function setUpTraits()
-    {
-        $uses = parent::setUpTraits();
-
-        if (isset($uses[DatabaseTransactions::class])) {
-            (new Snipe())->importSnapshot();
-        }
-    }
-    // End of added code.
+    use CreatesApplication, SnipeMigrations;
 }
 ```
+
+2. By default, SnipeMigrations will store a `.snipe` file and the `snipe_snapshot.sql` file in `/vendor/drfraker/snipe-migrations/snapshots`. If you would like to change the location of the files follow the directions below to publish
+the snipe config file.
+	- To publish the snipe config file, run `php artisan vendor:publish` and select `snipe-config` from the list.
+
+3. If the snip_snapshot.sql file gets out of sync for any reason you can clear it by running `php artisan snipe:clear`. After running
+this command your original database migrations will run again creating a new `snipe_snapshot.sql` file.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

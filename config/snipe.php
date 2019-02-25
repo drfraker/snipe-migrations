@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'snapshot-location' => base_path('vendor/drfraker/snipe-migrations/snapshots/snipe_snapshot.sql'),
-    'snipefile-location' => base_path('vendor/drfraker/snipe-migrations/snapshots/.snipe'),
+    'snapshot-location' => __DIR__ . '/../snapshots/snipe_snapshot.sql',
+    'snipefile-location' => __DIR__ . '/../snapshots/.snipe',
 ];

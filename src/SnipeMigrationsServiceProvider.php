@@ -2,6 +2,7 @@
 
 namespace Drfraker\SnipeMigrations;
 
+use Drfraker\SnipeMigrations\SnipeClearCommand;
 use Illuminate\Support\ServiceProvider;
 
 class SnipeMigrationsServiceProvider extends ServiceProvider
@@ -11,6 +12,12 @@ class SnipeMigrationsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/snipe.php' => config_path('snipe.php'),
         ], 'snipe-config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                SnipeClearCommand::class,
+            ]);
+        }
     }
 
     public function register()
