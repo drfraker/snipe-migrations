@@ -34,7 +34,7 @@ composer require --dev drfraker/snipe-migrations
 ## Usage
 
 **After you've installed the package via composer**
-1. Add the `SnipeMigrations` trait to your `tests/TestCase` file. Don't forget to import the class at the top of the file.
+1. Add the `SnipeMigrations` trait to your `tests/TestCase` file. Don't forget to import the class at the top of the file. Once you have added the `SnipeMigrations` trait, simply use the RefreshDatabase trait in any tests in which you wish to use database access, and Snipe will handle the rest for you.
 
 When you're done, your `tests/TestCase.php` file should look like this.
 
