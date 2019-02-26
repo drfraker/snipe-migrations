@@ -36,7 +36,7 @@ composer require --dev drfraker/snipe-migrations
 **After you've installed the package via composer**
 1. Add the `SnipeMigrations` trait to your `tests/TestCase` file. Don't forget to import the class at the top of the file.
 
-When you're done, you're `tests/TestCase.php` file should look like this.
+When you're done, your `tests/TestCase.php` file should look like this.
 
 ```php
 <?php
