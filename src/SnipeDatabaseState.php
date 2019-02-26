@@ -10,5 +10,7 @@ namespace Drfraker\SnipeMigrations;
 
 class SnipeDatabaseState
 {
-    public static $imported = false;
+    public static $importedDatabase = false;
+
+    public static $checkedForMigrationChanges = false;
 }

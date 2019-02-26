@@ -42,25 +42,17 @@ class Snipe
      */
     protected function migrationChanges()
     {
-        $snipeFile = config('snipe.snipefile-location');
-        $snipeDumpFile = config('snipe.snapshot-location');
+        if (! SnipeDatabaseState::$checkedForMigrationChanges) {
+            $timeSum = $this->migrationFileTimeSum();
 
-        $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
-        $paths = collect(app()['migrator']->paths())->concat([database_path('migrations')]);
-        $timeSum = $paths->map(function ($path) {
-            return collect(File::allFiles($path))->sum(function ($file) {
-                return $file->getMTime();
-            });
-        })->sum();
+            if ($hasChanges = $this->migrationFilesHaveChanged($timeSum)) {
+                file_put_contents(config('snipe.snipefile-location'), $timeSum);
+            }
 
-        if (! $storedTimeSum || (int) $storedTimeSum !== $timeSum || ! file_exists($snipeDumpFile)) {
-            // store the new time sum.
-            file_put_contents($snipeFile, $timeSum);
+            SnipeDatabaseState::$checkedForMigrationChanges = true;
 
-            return true;
+            return $hasChanges;
         }
-
-        return false;
     }
 
     /**
@@ -77,15 +69,49 @@ class Snipe
     }
 
     /**
+     * Scan migration files for sum of last modified times.
+     *
+     * @return integer
+     */
+    protected function migrationFileTimeSum()
+    {
+        return collect(app()['migrator']->paths())
+            ->concat([database_path('migrations')])
+            ->map(function ($path) {
+                return collect(File::allFiles($path))
+                    ->sum(function ($file) {
+                        return $file->getMTime();
+                    });
+            })->sum();
+    }
+
+    /**
+     * Determine if any of the application's migration files have been updated since the last time a snapshot
+     * was created.
+     *
+     * @param $timeSum
+     * @return bool
+     */
+    protected function migrationFilesHaveChanged($timeSum): bool
+    {
+        $snipeFile = config('snipe.snipefile-location');
+
+        $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
+
+        return (int)$storedTimeSum !== $timeSum || !file_exists(config('snipe.snapshot-location'));
+    }
+
+    /**
      * Import the snapshot file into the database if it hasn't been imported yet.
      */
     protected function importDatabase()
     {
-        if (! SnipeDatabaseState::$imported) {
+        if (! SnipeDatabaseState::$importedDatabase) {
             $dumpfile = config('snipe.snapshot-location');
 
             exec("mysql -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
-            SnipeDatabaseState::$imported = true;
+
+            SnipeDatabaseState::$importedDatabase = true;
         }
     }
 
