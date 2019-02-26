@@ -71,7 +71,7 @@ class Snipe
     /**
      * Scan migration files for sum of last modified times.
      *
-     * @return integer
+     * @return int
      */
     protected function migrationFileTimeSum()
     {
@@ -98,7 +98,7 @@ class Snipe
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
 
-        return (int)$storedTimeSum !== $timeSum || !file_exists(config('snipe.snapshot-location'));
+        return (int) $storedTimeSum !== $timeSum || ! file_exists(config('snipe.snapshot-location'));
     }
 
     /**
