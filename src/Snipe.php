@@ -65,7 +65,7 @@ class Snipe
         $storageLocation = config('snipe.snapshot-location');
 
         // Store a snapshot of the db after migrations run.
-        exec("mysqldump -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
+        exec("mysqldump -h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
     }
 
     /**
@@ -124,6 +124,19 @@ class Snipe
     {
         return config('database.default');
     }
+
+    /**
+     * Get the Database host from the config settings.
+     *
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    protected function getDbHost()
+    {
+        $connection = $this->getDatabaseConnection();
+
+        return config("database.connections.{$connection}.host");
+    }
+
 
     /**
      * Get the Database username from the config settings.
