@@ -16,7 +16,7 @@ As an example, we tested this on an application that takes about 4 seconds to ru
 Using SnipeMigrations the tests start up in 200 ms.
 
 ## Requirements
-1. Laravel >= 5.2
+1. Laravel >= 5.5
 2. PHP >= 7.1
 3. MySql or MariaDb, with separate database for testing.
 	- For example if you have a development database for your application called `amazingapp`
