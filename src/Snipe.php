@@ -46,7 +46,6 @@ class Snipe
             $timeSum = $this->migrationFileTimeSum();
 
             if ($hasChanges = $this->migrationFilesHaveChanged($timeSum)) {
-
                 file_put_contents(config('snipe.snipefile-location'), $timeSum);
             }
 
