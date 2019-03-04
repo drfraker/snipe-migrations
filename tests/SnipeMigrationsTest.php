@@ -9,7 +9,7 @@ class SnipeMigrationsTest extends TestCase
 {
     protected $snipe;
 
-    public function setUp()
+    public function setUp() :void
     {
         parent::setUp();
 
