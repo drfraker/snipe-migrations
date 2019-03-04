@@ -3,6 +3,7 @@
 namespace Drfraker\SnipeMigrations\Tests;
 
 use Drfraker\SnipeMigrations\Snipe;
+use Illuminate\Support\Facades\Artisan;
 
 class SnipeMigrationsTest extends TestCase
 {
@@ -12,6 +13,8 @@ class SnipeMigrationsTest extends TestCase
     {
         parent::setUp();
 
+        $this->clearSnapshotDir();
+
         $this->snipe = new Snipe();
     }
 
@@ -20,20 +23,28 @@ class SnipeMigrationsTest extends TestCase
     {
         $this->mimicInMemoryDatabase();
 
-        try {
-            $this->snipe->importSnapshot();
-        } catch (\Exception $e) {
-            $this->assertInstanceOf(\Exception::class, $e);
-            $this->assertEquals(
-                'Snipe Migrations is not yet configured to handle in memory databases',
-                $e->getMessage()
-            );
-        }
+        Artisan::ShouldReceive('call')->never();
+
+        $this->snipe->importSnapshot();
     }
 
     protected function mimicInMemoryDatabase(): void
     {
         config()->set('database.default', 'sqlite');
         config()->set('database.connections.sqlite.database', ':memory:');
+    }
+
+    protected function clearSnapshotDir()
+    {
+        $snipefile = '../snapshots/.snipe';
+        $snapshot = '../snapshots/snipe_snapshot.sql';
+
+        if (file_exists($snipefile)) {
+            unlink($snipefile);
+        }
+
+        if (file_exists($snapshot)) {
+            unlink($snapshot);
+        }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Drfraker\SnipeMigrations;
 
-use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 
@@ -14,7 +13,8 @@ class Snipe
     public function importSnapshot()
     {
         if ($this->usingInMemoryDatabase()) {
-            throw new Exception('Snipe Migrations is not yet configured to handle in memory databases');
+            // Does not handle in memory databases yet.
+            return;
         }
 
         $this->migrationChanges()
@@ -46,6 +46,7 @@ class Snipe
             $timeSum = $this->migrationFileTimeSum();
 
             if ($hasChanges = $this->migrationFilesHaveChanged($timeSum)) {
+
                 file_put_contents(config('snipe.snipefile-location'), $timeSum);
             }
 
