@@ -137,7 +137,6 @@ class Snipe
         return config("database.connections.{$connection}.host");
     }
 
-
     /**
      * Get the Database username from the config settings.
      *
