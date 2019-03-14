@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
- - Changed minimum required PHP version to 7.1
+
+## [1.1.4] - 2019-03-14
+### Changed
+- Changed minimum required PHP version to 7.1
  - Downgraded PHPUnit from 8.0 to 7.0 as a result of PHP version change
 
 ## [1.0.2] - 2019-02-23
