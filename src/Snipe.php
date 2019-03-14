@@ -109,7 +109,7 @@ class Snipe
         if (! SnipeDatabaseState::$importedDatabase) {
             $dumpfile = config('snipe.snapshot-location');
 
-            exec("mysql -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
+            exec("mysql -h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
 
             SnipeDatabaseState::$importedDatabase = true;
         }
