@@ -62,6 +62,13 @@ class Snipe
     {
         Artisan::call('migrate:fresh');
 
+        // Seed the database if required
+        if (config('snipe.seed-database', false)) {
+            Artisan::call('db:seed', [
+                '--class' => config('snipe.seed-class', 'DatabaseSeeder'),
+            ]);
+        }
+
         $storageLocation = config('snipe.snapshot-location');
 
         // Store a snapshot of the db after migrations run.
@@ -82,7 +89,7 @@ class Snipe
                     ->sum(function ($file) {
                         return $file->getMTime();
                     });
-            })->sum();
+            })->sum() + (config('snipe.seed-database', false) ? 1 : -1);
     }
 
     /**
