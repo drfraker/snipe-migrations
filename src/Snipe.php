@@ -17,7 +17,7 @@ class Snipe
             return;
         }
 
-        $this->migrationChanges()
+        $this->databaseFileChanges()
             ? $this->newSnapshot()
             : $this->importDatabase();
     }
@@ -36,20 +36,23 @@ class Snipe
     }
 
     /**
-     * Determine if there have been migration changes since the last time the snapshot was updated.
+     * Determine if there have been migration or (if enabled) seeder file changes since the last time the snapshot was updated.
      *
      * @return bool
      */
-    protected function migrationChanges()
+    protected function databaseFileChanges()
     {
-        if (! SnipeDatabaseState::$checkedForMigrationChanges) {
-            $timeSum = $this->migrationFileTimeSum();
+        if (! SnipeDatabaseState::$checkedForDatabaseFileChanges) {
 
-            if ($hasChanges = $this->migrationFilesHaveChanged($timeSum)) {
+            $timeSum = config('snipe.seed-database', false)
+                ? $this->migrationFileTimeSum() + $this->seederFileTimeSum()
+                : $this->migrationFileTimeSum();
+
+            if ($hasChanges = $this->databaseFilesHaveChanged($timeSum)) {
                 file_put_contents(config('snipe.snipefile-location'), $timeSum);
             }
 
-            SnipeDatabaseState::$checkedForMigrationChanges = true;
+            SnipeDatabaseState::$checkedForDatabaseFileChanges = true;
 
             return $hasChanges;
         }
@@ -89,7 +92,23 @@ class Snipe
                     ->sum(function ($file) {
                         return $file->getMTime();
                     });
-            })->sum() + (config('snipe.seed-database', false) ? 1 : -1);
+            })->sum();
+    }
+
+    /**
+     * Scan seeder files for sum of last modified times.
+     *
+     * @return int
+     */
+    protected function seederFileTimeSum()
+    {
+        return collect([database_path('seeds')])
+            ->map(function ($path) {
+                return collect(File::allFiles($path))
+                    ->sum(function ($file) {
+                        return $file->getMTime();
+                    });
+            })->sum();
     }
 
     /**
@@ -99,7 +118,7 @@ class Snipe
      * @param $timeSum
      * @return bool
      */
-    protected function migrationFilesHaveChanged($timeSum): bool
+    protected function databaseFilesHaveChanged($timeSum): bool
     {
         $snipeFile = config('snipe.snipefile-location');
 

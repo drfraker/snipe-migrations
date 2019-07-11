@@ -10,8 +10,8 @@ return [
     | in /vendor/drfraker/snipe-migrations/snapshots. If you would like to
     | change the location of the files, update the paths below.
     */
-    'snapshot-location'  => base_path('vendor/drfraker/snipe-migrations/snapshots/') . 'snipe_snapshot.sql',
-    'snipefile-location' => base_path('vendor/drfraker/snipe-migrations/snapshots/') . '.snipe',
+    'snapshot-location'  => base_path('vendor/drfraker/snipe-migrations/snapshots/').'snipe_snapshot.sql',
+    'snipefile-location' => base_path('vendor/drfraker/snipe-migrations/snapshots/').'.snipe',
 
     /*
     |--------------------------------------------------------------------------
