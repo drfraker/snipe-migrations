@@ -43,7 +43,6 @@ class Snipe
     protected function databaseFileChanges()
     {
         if (! SnipeDatabaseState::$checkedForDatabaseFileChanges) {
-
             $timeSum = config('snipe.seed-database', false)
                 ? $this->migrationFileTimeSum() + $this->seederFileTimeSum()
                 : $this->migrationFileTimeSum();
