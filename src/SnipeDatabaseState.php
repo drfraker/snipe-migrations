@@ -12,5 +12,5 @@ class SnipeDatabaseState
 {
     public static $importedDatabase = false;
 
-    public static $checkedForMigrationChanges = false;
+    public static $checkedForDatabaseFileChanges = false;
 }
