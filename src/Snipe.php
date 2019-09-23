@@ -74,7 +74,7 @@ class Snipe
         $storageLocation = config('snipe.snapshot-location');
 
         // Store a snapshot of the db after migrations run.
-        exec("mysqldump -h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
+        $this->execute('mysqldump', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
     }
 
     /**
@@ -134,7 +134,7 @@ class Snipe
         if (! SnipeDatabaseState::$importedDatabase) {
             $dumpfile = config('snipe.snapshot-location');
 
-            exec("mysql -h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
+            $this->execute('mysql', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
 
             SnipeDatabaseState::$importedDatabase = true;
         }
@@ -196,5 +196,27 @@ class Snipe
         $connection = $this->getDatabaseConnection();
 
         return config("database.connections.{$connection}.database");
+    }
+
+    /**
+     * Returns the path to the given binary executable.
+     *
+     * @param string $binary
+     * @return string
+     */
+    protected function getBinaryPath($binary)
+    {
+        return config("snipe.binaries.$binary", $binary);
+    }
+
+    /**
+     * Executes the given command.
+     *
+     * @param  string  $binary
+     * @param  string  $command
+     */
+    protected function execute(string $binary, string $command)
+    {
+        exec("{$this->getBinaryPath($binary)} $command");
     }
 }

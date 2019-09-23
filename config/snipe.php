@@ -25,4 +25,21 @@ return [
     'seed-database'      => false,
     'seed-class'         => 'DatabaseSeeder',
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Command Execution
+    |--------------------------------------------------------------------------
+    | Many systems have the mysql binaries already installed (e.g. Homestead).
+    | In case the binaries lie at a different path or have a special prefix,
+    | as seen in docker-based setups, they can be configured here.
+    |
+    | e.g. 'mysql' => 'docker-compose test_db mysql'
+    */
+
+    'binaries'          => [
+        'mysql'     => 'mysql',
+        'mysqldump' => 'mysqldump',
+    ],
+
 ];
