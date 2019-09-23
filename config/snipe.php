@@ -25,7 +25,6 @@ return [
     'seed-database'      => false,
     'seed-class'         => 'DatabaseSeeder',
 
-
     /*
     |--------------------------------------------------------------------------
     | Command Execution
