@@ -215,7 +215,7 @@ class Snipe
      * @param  string  $binary
      * @param  string  $command
      */
-    protected function execute(string $binary, string $command)
+    protected function execute($binary, $command)
     {
         exec("{$this->getBinaryPath($binary)} $command");
     }
