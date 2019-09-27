@@ -13,19 +13,19 @@ class SnipeMigrationsTest extends TestCase
     protected $snipe;
 
     /**
-     * The absolute path to the "snapshots" folder
-     * @var
+     * The absolute path to the "snapshots" folder.
+     * @var string
      */
     protected $snipeFolder;
 
     /**
-     * The full path to the snipe_snapshot.sql file
+     * The full path to the snipe_snapshot.sql file.
      * @var string
      */
     protected $snapshotFile;
 
     /**
-     * The full path to the .snip file
+     * The full path to the .snip file.
      * @var string
      */
     protected $snipeFile;
@@ -99,7 +99,7 @@ class SnipeMigrationsTest extends TestCase
 
     protected function clearSnapshotDir()
     {
-        if (!is_dir($this->snipeFolder)) {
+        if (! is_dir($this->snipeFolder)) {
             mkdir($this->snipeFolder, 0777, true);
             return;
         }
