@@ -2,6 +2,7 @@
 
 namespace Drfraker\SnipeMigrations\Tests;
 
+use phpmock\mockery\PHPMockery;
 use Drfraker\SnipeMigrations\Snipe;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
@@ -48,6 +49,11 @@ class SnipeMigrationsTest extends TestCase
         $this->resetDatabaseState();
 
         $this->snipe = new Snipe();
+
+        // Add support for native method mocking. We pre-define the exec method here.
+        // If we would just call the mock method in our tests where we need it, PHP
+        // would have already cached the call to the native method instead.
+        PHPMockery::define('Drfraker\SnipeMigrations', 'exec');
     }
 
     /** @test */
@@ -87,6 +93,23 @@ class SnipeMigrationsTest extends TestCase
 
         // This time the changes should have been picked up
         $this->assertGreaterThan(0, file_get_contents($this->snipeFile));
+    }
+
+    /** @test */
+    public function it_allows_a_custom_prefix_for_executables()
+    {
+        Artisan::shouldReceive('call')->withAnyArgs();
+
+        // Define the custom binary path we want to use
+        static $customBinary = 'docker-compose exec db mysql';
+        config()->set(['snipe.binaries.mysqldump' => $customBinary]);
+
+        PHPMockery::mock('Drfraker\SnipeMigrations', 'exec')
+            ->withArgs(static function ($args) use ($customBinary) {
+                return strpos($args, $customBinary) === 0;
+            })->once();
+
+        $this->snipe->importSnapshot();
     }
 
     protected function mimicInMemoryDatabase(): void
