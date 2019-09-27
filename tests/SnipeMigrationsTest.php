@@ -60,6 +60,14 @@ class SnipeMigrationsTest extends TestCase
         $this->snipe->importSnapshot();
     }
 
+    /** @test */
+    public function it_calls_migration_commands_for_mysql_databases()
+    {
+        Artisan::shouldReceive('call')->with('migrate:fresh');
+
+        $this->snipe->importSnapshot();
+    }
+
     protected function mimicInMemoryDatabase(): void
     {
         config()->set([
