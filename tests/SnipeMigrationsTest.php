@@ -68,6 +68,27 @@ class SnipeMigrationsTest extends TestCase
         $this->snipe->importSnapshot();
     }
 
+    /** @test */
+    public function it_detects_file_changes_in_the_migration_folder()
+    {
+        Artisan::shouldReceive('call');
+
+        // The first time we run snipe, we have no migrations
+        $this->snipe->importSnapshot();
+
+        $this->assertFileExists($this->snipeFile);
+        $this->assertEquals(0, file_get_contents($this->snipeFile));
+
+        $this->copyDefaultMigrations();
+
+        // Let's do a re-run
+        $this->resetDatabaseState();
+        $this->snipe->importSnapshot();
+
+        // This time the changes should have been picked up
+        $this->assertGreaterThan(0, file_get_contents($this->snipeFile));
+    }
+
     protected function mimicInMemoryDatabase(): void
     {
         config()->set([
@@ -99,6 +120,13 @@ class SnipeMigrationsTest extends TestCase
             if ($file->getFilename() !== '.gitkeep') {
                 unlink($file->getRealPath());
             }
+        }
+    }
+
+    protected function copyDefaultMigrations(): void
+    {
+        foreach (File::allFiles(base_path('migrations')) as $file) {
+            copy($file->getRealPath(), database_path("migrations/{$file->getFilename()}"));
         }
     }
 
