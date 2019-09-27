@@ -31,7 +31,6 @@ class SnipeMigrationsTest extends TestCase
      */
     protected $snipeFile;
 
-
     public function setUp() :void
     {
         parent::setUp();
@@ -124,6 +123,7 @@ class SnipeMigrationsTest extends TestCase
     {
         if (! is_dir($this->snipeFolder)) {
             mkdir($this->snipeFolder, 0777, true);
+
             return;
         }
 
