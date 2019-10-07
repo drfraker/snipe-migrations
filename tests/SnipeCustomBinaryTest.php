@@ -18,7 +18,7 @@ class SnipeCustomBinaryTest extends SnipeMigrationsTest
     public function setUp(): void
     {
         // Define the custom binary path we want to use
-        putenv(self::ENV_VARIABLE . '=' . self::$customBinary);
+        putenv(self::ENV_VARIABLE.'='.self::$customBinary);
 
         parent::setUp();
     }
