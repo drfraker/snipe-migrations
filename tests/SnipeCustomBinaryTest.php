@@ -2,9 +2,6 @@
 
 namespace Drfraker\SnipeMigrations\Tests;
 
-use phpmock\mockery\PHPMockery;
-use Illuminate\Support\Facades\Artisan;
-
 /**
  * Custom test class to check setting the binary path via env variables.
  * This is necessary as we need to call "putenv" before the actual setUp() method gets called.
@@ -12,13 +9,17 @@ use Illuminate\Support\Facades\Artisan;
  */
 class SnipeCustomBinaryTest extends SnipeMigrationsTest
 {
-    private const ENV_VARIABLE = 'SNIPE_BINARY_MYSQLDUMP';
-    private static $customBinary = 'phpunitdump';
+    private const ENV_MYSQL = 'SNIPE_BINARY_MYSQL';
+    private const ENV_MYSQLDUMP = 'SNIPE_BINARY_MYSQLDUMP';
+
+    private static $customMysql = 'phpunitmysql';
+    private static $customMysqldump = 'phpunitmysqldump';
 
     public function setUp(): void
     {
         // Define the custom binary path we want to use
-        putenv(self::ENV_VARIABLE.'='.self::$customBinary);
+        putenv(self::ENV_MYSQL.'='.self::$customMysql);
+        putenv(self::ENV_MYSQLDUMP.'='.self::$customMysqldump);
 
         parent::setUp();
     }
@@ -27,19 +28,14 @@ class SnipeCustomBinaryTest extends SnipeMigrationsTest
     {
         parent::tearDown();
 
-        putenv(self::ENV_VARIABLE);
+        putenv(self::ENV_MYSQL);
+        putenv(self::ENV_MYSQLDUMP);
     }
 
     /** @test */
     public function it_allows_custom_binary_paths_based_on_environment_variables()
     {
-        Artisan::shouldReceive('call')->withAnyArgs();
-
-        PHPMockery::mock('Drfraker\SnipeMigrations', 'exec')
-            ->withArgs(static function ($args) {
-                return strpos($args, self::$customBinary) === 0;
-            })->once();
-
-        $this->snipe->importSnapshot();
+        $this->assertEquals(self::$customMysql, config('snipe.binaries.mysql'));
+        $this->assertEquals(self::$customMysqldump, config('snipe.binaries.mysqldump'));
     }
 }
