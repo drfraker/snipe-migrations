@@ -37,8 +37,8 @@ return [
     */
 
     'binaries'          => [
-        'mysql'     => 'mysql',
-        'mysqldump' => 'mysqldump',
+        'mysql'     => env('SNIPE_BINARY_MYSQL', 'mysql'),
+        'mysqldump' => env('SNIPE_BINARY_MYSQLDUMP', 'mysqldump'),
     ],
 
 ];
