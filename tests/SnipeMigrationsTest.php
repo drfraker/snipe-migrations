@@ -26,7 +26,7 @@ class SnipeMigrationsTest extends TestCase
     protected $snapshotFile;
 
     /**
-     * The full path to the .snip file.
+     * The full path to the .snipe file.
      * @var string
      */
     protected $snipeFile;
