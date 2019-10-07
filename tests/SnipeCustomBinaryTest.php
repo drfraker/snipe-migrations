@@ -7,7 +7,7 @@ namespace Drfraker\SnipeMigrations\Tests;
  * This is necessary as we need to call "putenv" before the actual setUp() method gets called.
  * DotEnv is in "immutable mode", so any changes inside the tests would have no effect.
  */
-class SnipeCustomBinaryTest extends SnipeMigrationsTest
+class SnipeCustomBinaryTest extends TestCase
 {
     private const ENV_MYSQL = 'SNIPE_BINARY_MYSQL';
     private const ENV_MYSQLDUMP = 'SNIPE_BINARY_MYSQLDUMP';
