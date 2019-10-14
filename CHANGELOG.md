@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.3.1] - 2019-10-14
 ### Added
 - Allow custom binary paths to be specified in the config file
  - This also includes two new env variables: SNIPE_BINARY_MYSQL and SNIPE_BINARY_MYSQLDUMP
