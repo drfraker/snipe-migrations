@@ -33,12 +33,12 @@ return [
     | In case the binaries lie at a different path or have a special prefix,
     | as seen in docker-based setups, they can be configured here.
     |
-    | e.g. 'mysql' => 'docker-compose test_db mysql'
+    | e.g. 'mysql' => 'docker-compose exec test_db mysql'
     */
 
     'binaries'          => [
-        'mysql'     => 'mysql',
-        'mysqldump' => 'mysqldump',
+        'mysql'     => env('SNIPE_BINARY_MYSQL', 'mysql'),
+        'mysqldump' => env('SNIPE_BINARY_MYSQLDUMP', 'mysqldump'),
     ],
 
 ];
