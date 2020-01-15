@@ -2,6 +2,7 @@
 
 namespace Drfraker\SnipeMigrations;
 
+use Exception;
 use Illuminate\Console\Command;
 
 class SnipeClearCommand extends Command
@@ -20,19 +21,19 @@ class SnipeClearCommand extends Command
      */
     public function handle()
     {
-        $snipefile = config('snipe.snipefile-location');
+        $snipeFile = config('snipe.snipefile-location');
 
-        if ($snipefile && file_exists($snipefile)) {
-            try {
-                unlink($snipefile);
-                $this->info('Cleared snipe migration snapshot.');
-            } catch (\Exception $exception) {
-                $this->warn("Could not delete snipe migration file: {$exception->getMessage()}");
-            }
+        if (! $snipeFile || ! file_exists($snipeFile)) {
+            $this->info('No Snipe migration snapshot found (it may have been cleared already).');
 
             return;
         }
 
-        $this->info('No Snipe migration snapshot found (it may have been cleared already).');
+        try {
+            unlink($snipeFile);
+            $this->info('Cleared snipe migration snapshot.');
+        } catch (Exception $exception) {
+            $this->warn("Could not delete snipe migration file: {$exception->getMessage()}");
+        }
     }
 }
