@@ -2,8 +2,8 @@
 
 namespace Drfraker\SnipeMigrations\Tests;
 
-use phpmock\mockery\PHPMockery;
 use Illuminate\Support\Facades\Artisan;
+use phpmock\mockery\PHPMockery;
 
 class SnipeMigrationsTest extends TestCase
 {
