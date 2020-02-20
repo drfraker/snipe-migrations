@@ -2,8 +2,8 @@
 
 namespace Drfraker\SnipeMigrations;
 
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 
 class Snipe
 {
@@ -119,11 +119,15 @@ class Snipe
      */
     protected function databaseFilesHaveChanged($timeSum): bool
     {
+        if (! file_exists(config('snipe.snapshot-location'))) {
+            return true;
+        }
+
         $snipeFile = config('snipe.snipefile-location');
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
 
-        return (int) $storedTimeSum !== $timeSum || ! file_exists(config('snipe.snapshot-location'));
+        return (int) $storedTimeSum !== $timeSum;
     }
 
     /**
