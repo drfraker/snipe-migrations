@@ -2,11 +2,11 @@
 
 namespace Drfraker\SnipeMigrations\Tests;
 
-use phpmock\mockery\PHPMockery;
 use Drfraker\SnipeMigrations\Snipe;
-use Illuminate\Support\Facades\File;
 use Drfraker\SnipeMigrations\SnipeDatabaseState;
 use Drfraker\SnipeMigrations\SnipeMigrationsServiceProvider;
+use Illuminate\Support\Facades\File;
+use phpmock\mockery\PHPMockery;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -31,7 +31,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected $snipeFile;
 
-    public function setUp() :void
+    public function setUp(): void
     {
         parent::setUp();
 
