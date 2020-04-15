@@ -127,7 +127,7 @@ class Snipe
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
 
-        return (int) ((string)$storedTimeSum != (string)$timeSum);
+        return (int) ((string) $storedTimeSum != (string) $timeSum);
     }
 
     /**
@@ -220,12 +220,12 @@ class Snipe
      */
     protected function getOutputRedirection()
     {
-        $redirection = "";
+        $redirection = '';
         $isWindows = (stripos(PHP_OS, 'WIN') === 0);
         if ($isWindows) {
-            $redirection = "2> nul";
+            $redirection = '2> nul';
         } else {
-            $redirection = "2>/dev/null";
+            $redirection = '2>/dev/null';
         }
 
         return $redirection;
