@@ -127,7 +127,7 @@ class Snipe
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
 
-        return (int) $storedTimeSum !== $timeSum;
+        return (int) ((string)$storedTimeSum != (string)$timeSum);
     }
 
     /**
