@@ -101,7 +101,7 @@ class Snipe
      */
     protected function seederFileTimeSum()
     {
-        return collect([database_path('seeds')])
+        return collect([database_path('seeders')])
             ->map(function ($path) {
                 return collect(File::allFiles($path))
                     ->sum(function ($file) {
