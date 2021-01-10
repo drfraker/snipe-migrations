@@ -145,14 +145,14 @@ class Snipe
     }
 
     /**
-     * Get the seeder folder path. 
+     * Get the seeder folder path.
      *
      * @return string
      */
     protected function getSeederPath(): string
     {
         $path = database_path('seeds');
-        
+
         return is_dir($path) ? $path : database_path('seeders');
     }
 
