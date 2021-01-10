@@ -101,7 +101,7 @@ class Snipe
      */
     protected function seederFileTimeSum()
     {
-        return collect([database_path('seeds')])
+        return collect([$this->getSeederPath()])
             ->map(function ($path) {
                 return collect(File::allFiles($path))
                     ->sum(function ($file) {
@@ -142,6 +142,18 @@ class Snipe
 
             SnipeDatabaseState::$importedDatabase = true;
         }
+    }
+
+    /**
+     * Get the seeder folder path. 
+     *
+     * @return string
+     */
+    protected function getSeederPath(): string
+    {
+        $path = database_path('seeds');
+        
+        return is_dir($path) ? $path : database_path('seeders');
     }
 
     /**
