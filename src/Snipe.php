@@ -101,7 +101,7 @@ class Snipe
      */
     protected function seederFileTimeSum()
     {
-        return collect([database_path('seeds')])
+        return collect([$this->getSeedsFolderPath()])
             ->map(function ($path) {
                 return collect(File::allFiles($path))
                     ->sum(function ($file) {
@@ -222,5 +222,12 @@ class Snipe
     protected function execute($binary, $command)
     {
         exec("{$this->getBinaryPath($binary)} $command");
+    }
+
+
+    protected function getSeedsFolderPath(): string
+    {
+        $existPath = is_dir(database_path('seeds'));
+        return  $existPath ? database_path('seeds') : database_path('seeders');
     }
 }
