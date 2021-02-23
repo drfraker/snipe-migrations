@@ -224,10 +224,10 @@ class Snipe
         exec("{$this->getBinaryPath($binary)} $command");
     }
 
-
     protected function getSeedsFolderPath(): string
     {
         $existPath = is_dir(database_path('seeds'));
+        
         return  $existPath ? database_path('seeds') : database_path('seeders');
     }
 }
