@@ -74,7 +74,7 @@ class Snipe
         $storageLocation = config('snipe.snapshot-location');
 
         // Store a snapshot of the db after migrations run.
-        $this->execute('mysqldump', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
+        $this->execute('mysqldump', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation}");
     }
 
     /**
@@ -127,7 +127,7 @@ class Snipe
 
         $storedTimeSum = file_exists($snipeFile) ? file_get_contents($snipeFile) : 0;
 
-        return (int) $storedTimeSum !== $timeSum;
+        return (bool) ((string) $storedTimeSum !== (string) $timeSum);
     }
 
     /**
@@ -138,7 +138,7 @@ class Snipe
         if (! SnipeDatabaseState::$importedDatabase) {
             $dumpfile = config('snipe.snapshot-location');
 
-            $this->execute('mysql', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
+            $this->execute('mysql', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile}");
 
             SnipeDatabaseState::$importedDatabase = true;
         }
@@ -226,6 +226,24 @@ class Snipe
     }
 
     /**
+     * Returns the redirection for the executing OS.
+     *
+     * @return string
+     */
+    protected function getOutputRedirection()
+    {
+        $redirection = '';
+        $isWindows = (stripos(PHP_OS, 'WIN') === 0);
+        if ($isWindows) {
+            $redirection = '2> nul';
+        } else {
+            $redirection = '2>/dev/null';
+        }
+
+        return $redirection;
+    }
+
+    /**
      * Executes the given command.
      *
      * @param  string  $binary
@@ -233,6 +251,6 @@ class Snipe
      */
     protected function execute($binary, $command)
     {
-        exec("{$this->getBinaryPath($binary)} $command");
+        exec("{$this->getBinaryPath($binary)} $command {$this->getOutputRedirection()}");
     }
 }
