@@ -74,7 +74,7 @@ class Snipe
         $storageLocation = config('snipe.snapshot-location');
 
         // Store a snapshot of the db after migrations run.
-        $this->execute('mysqldump', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
+        $this->execute('mysqldump', "-h {$this->getDbHost()} -P {$this->getDbPort()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} > {$storageLocation} 2>/dev/null");
     }
 
     /**
@@ -138,7 +138,7 @@ class Snipe
         if (! SnipeDatabaseState::$importedDatabase) {
             $dumpfile = config('snipe.snapshot-location');
 
-            $this->execute('mysql', "-h {$this->getDbHost()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
+            $this->execute('mysql', "-h {$this->getDbHost()} -P {$this->getDbPort()} -u {$this->getDbUsername()} --password={$this->getDbPassword()} {$this->getDbName()} < {$dumpfile} 2>/dev/null");
 
             SnipeDatabaseState::$importedDatabase = true;
         }
@@ -176,6 +176,16 @@ class Snipe
         $connection = $this->getDatabaseConnection();
 
         return config("database.connections.{$connection}.host");
+    }
+
+    /**
+     * Get the Database port for testing from the config settings.
+     *
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    protected function getDbPort()
+    {
+        return config("snipe.db-port");
     }
 
     /**
