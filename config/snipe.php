@@ -41,4 +41,15 @@ return [
         'mysqldump' => env('SNIPE_BINARY_MYSQLDUMP', 'mysqldump'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Database Connection Customization
+    |--------------------------------------------------------------------------
+    | If you use a different port for your test database, update it here or
+    | ensure the environment variable DB_PORT has the correct value in
+    | your .env file or using a PhpUnit override:
+    |
+    | e.g. <server name="DB_PORT" value="3307"/>
+    */
+    'db-port' => env('DB_PORT', 3306),
 ];
