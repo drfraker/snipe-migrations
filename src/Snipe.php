@@ -185,7 +185,7 @@ class Snipe
      */
     protected function getDbPort()
     {
-        return config("snipe.db-port");
+        return config('snipe.db-port');
     }
 
     /**
@@ -227,7 +227,7 @@ class Snipe
     /**
      * Returns the path to the given binary executable.
      *
-     * @param string $binary
+     * @param  string  $binary
      * @return string
      */
     protected function getBinaryPath($binary)
