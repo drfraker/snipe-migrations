@@ -15,7 +15,7 @@ class SnipeCustomBinaryTest extends TestCase
     private static $customMysql = 'phpunitmysql';
     private static $customMysqldump = 'phpunitmysqldump';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         // Define the custom binary path we want to use
         putenv(self::ENV_MYSQL.'='.self::$customMysql);
